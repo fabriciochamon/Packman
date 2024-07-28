@@ -1,8 +1,6 @@
 # Packman
 A simple, project based, houdini loader and package manager for Linux.
 
-![Packman UI](./images/screenshot1.png)
-
 ## How different from a regular Houdini launcher ?
 
 In Packman you can customize Houdini versions, products (FX/Core/Indie), and json packages per project, in a nice and clean user interface.
@@ -13,5 +11,16 @@ In Packman you can customize Houdini versions, products (FX/Core/Indie), and jso
 3. Add a new Packman project, choose versions and packages you wish to load.
 4. Open your Houdini from there, always.
 5. Done. Now you can setup project environments really easy, with a fews clicks away.
+
+## Screenshots:
+
+![Packman UI](./images/screenshot1.png "Simple/minimal UI")
+
+![Add project](./images/screenshot2.png "Project configuration")
+
+![Config preview](./images/screenshot3.png "Quick config inspection on mouse hover")
+
+![Config preview](./images/screenshot4.png "Archive old projects to clean UI, but keep track of settings in case you need to re-open ever again.")
+
 
 
