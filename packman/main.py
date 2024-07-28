@@ -361,7 +361,7 @@ with dpg.window(width=600, height=600, pos=(50,50), show=False, tag='add_project
 		multi_selection = True
 		for i, item in enumerate(available_packages):
 			if (i%3==0):
-				grp = dpg.add_group(horizontal=True, tag='grp_packages')
+				grp = dpg.add_group(horizontal=True)
 			btn_package = dpg.add_button(tag=f'packages--{i}', label=f'{item}', user_data=['packages', item, multi_selection], callback=project_set_item, parent=grp)
 			dpg.bind_item_theme(btn_package, 'toogle_OFF')
 
