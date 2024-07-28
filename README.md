@@ -23,8 +23,11 @@ In Packman you can customize Houdini versions, products (FX/Core/Indie), and jso
 *Quick inspect configs on mouse hover*  
 ![Config preview](./images/screenshot3.png)
 
-*Archive old projects, keep track of the settings in case you need to re-open files.*  
+*Archive old projects, but keep track of the settings in case you need to re-open files*  
 ![Archives](./images/screenshot4.png)
+
+*Right click projects to modify/archive/delete them*    
+![Mdify config](./images/screenshot5.png)
 
 
 
