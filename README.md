@@ -50,9 +50,11 @@ Menu **Add project**  > Fill in your project details
 
 ## Technical info:
 
-- All configs are stored as .json files (with corresponding folders) inside ~/.packman/configs or ~/.packman/archived. You can delete multiple configs at once by manually removing those files.
+- Houdini installs are assumed to live under the default /opt folder.
 
-- Config names only allow these characters: a-z | A-Z | 0-9 | dash, underscore, whitespace
+- All project configs are stored as .json files (with their corresponding folders) inside ~/.packman/configs or ~/.packman/archived. You can delete multiple configs at once by manually removing those files.
+
+- Config names will only allow for these characters: a-z | A-Z | 0-9 | dash, underscore, whitespace
 
 
 
