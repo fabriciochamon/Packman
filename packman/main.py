@@ -1,6 +1,5 @@
 import dearpygui.dearpygui as dpg
-import utils, os
-from pprint import pprint
+import utils, os, subprocess
 
 dpg.create_context()
 
@@ -119,8 +118,22 @@ def save_config():
 		center_item('ed')
 
 # houdini loader for current clicked config
-def load_config(sender, app_data, user_data):
-	print(user_data)
+def launch_config(sender, app_data, user_data):
+	config = user_data
+	env = os.environ.copy()
+	packman_home = utils.packman_home
+	subfolder = 'configs' if not config['archived'] else 'archived'
+	packages_path = os.path.join(packman_home, subfolder, config['name'].replace(' ', '_'))
+	env['HOUDINI_PACKAGE_DIR'] = packages_path
+	houdini_path = os.path.join('/opt', 'hfs'+config['houdini_version'], 'bin')
+	product = ''
+	if config['houdini_product'] == 'Core':
+		product='-core'
+	if config['houdini_product'] == 'Indie':
+		product='-indie'
+	cmd = f'{houdini_path}/houdini {product}'
+	utils.show_status(f'Launching \"{config["name"]}\"...', color=(64, 207, 102))
+	subprocess.Popen(cmd.split(), env=env)
 
 # center widget on main window
 def center_item(tag, offsetX=0, offsetH=0):
@@ -208,7 +221,7 @@ def rebuild_config_list():
 		for config in configs:
 			name = config['name']
 			with dpg.group(horizontal=True, parent=grp):
-				btn_load = dpg.add_button(label=name, user_data=config, width=-1, callback=load_config)
+				btn_load = dpg.add_button(label=name, user_data=config, width=-1, callback=launch_config)
 				
 				with dpg.popup(btn_load, mousebutton=dpg.mvMouseButton_Right):
 					
@@ -396,7 +409,7 @@ with dpg.window(tag='ed', show=False, label='Error', autosize=True):
 dpg.bind_item_font('ed', font_small)
 
 # STATUS TEXT BOX
-dpg.add_text('', color=(255,0,0, 255), tag='info_box', parent='mainwin')
+dpg.add_text('', color=(37,37,38, 255), tag='info_box', parent='mainwin')
 
 # FILE BROWSER: set packages repo
 fb = dpg.add_file_dialog(
@@ -428,13 +441,6 @@ dpg.create_viewport(
 	y_pos=viewport_y, 
 	disable_close=True)
 
-'''
-small_icon = os.path.abspath('./images/packman_logo_64.png')
-large_icon = os.path.abspath('./images/packman_logo_512.png')
-dpg.set_viewport_small_icon(small_icon)
-dpg.set_viewport_large_icon(large_icon)
-'''
-
 dpg.set_primary_window('mainwin', True)
 dpg.set_exit_callback(callback=utils.save_ui)
 dpg.set_viewport_resize_callback(utils.update_status_pos)
@@ -448,7 +454,7 @@ dpg.show_viewport()
 #dpg.start_dearpygui()
 utils.update_status_pos()
 
-# use render loop to dafe info_box color (alpha)
+# use render loop to fade info_box color (alpha)
 while dpg.is_dearpygui_running():
     fade_speed = 0.75
     info_box_color = dpg.get_item_configuration('info_box')['color']
