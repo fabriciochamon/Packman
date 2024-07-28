@@ -6,6 +6,7 @@ dpg.create_context()
 # init packman
 utils.init_packman_user_folder()
 prefs = utils.load_prefs()
+packages_per_row = 3
 glb = {}
 
 # --------- CALLBACKS --------- #
@@ -91,7 +92,13 @@ def show_project_window(sender=None, app_data=None, user_data=None, edit=False, 
 		dpg.set_value('project_name', config['name'])
 		for btn_grp in button_groups:
 			toggle_off_all_buttons(btn_grp)
-			buttons = dpg.get_item_children(f'grp_{btn_grp}')[1]
+			if btn_grp!='packages':
+				buttons = dpg.get_item_children(f'grp_{btn_grp}')[1]
+			else:
+				nrows = int(len(utils.get_available_packages(prefs))/packages_per_row)
+				buttons = []
+				for i in range(nrows+1):
+					buttons.extend(dpg.get_item_children(f'grp_{btn_grp}_{i}')[1])
 			for btn in buttons:
 				value = dpg.get_item_user_data(btn)[1]
 				if value in glb[btn_grp]:
@@ -374,9 +381,11 @@ with dpg.window(width=600, height=600, pos=(50,50), show=False, tag='add_project
 	with dpg.collapsing_header(label='Load Packages', default_open=True):
 		available_packages = utils.get_available_packages(prefs)
 		multi_selection = True
+		pkg_group_index = 0
 		for i, item in enumerate(available_packages):
-			if (i%3==0):
-				grp = dpg.add_group(horizontal=True)
+			if (i%packages_per_row==0):
+				grp = dpg.add_group(horizontal=True, tag=f'grp_packages_{pkg_group_index}')
+				pkg_group_index += 1
 			btn_package = dpg.add_button(tag=f'packages--{i}', label=f'{item}', user_data=['packages', item, multi_selection], callback=project_set_item, parent=grp)
 			dpg.bind_item_theme(btn_package, 'toogle_OFF')
 
