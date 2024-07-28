@@ -125,6 +125,8 @@ def launch_config(sender, app_data, user_data):
 	subfolder = 'configs' if not config['archived'] else 'archived'
 	packages_path = os.path.join(packman_home, subfolder, config['name'].replace(' ', '_'))
 	env['HOUDINI_PACKAGE_DIR'] = packages_path
+	env['HOUDINI_SPLASH_MESSAGE'] = f'Packman enviroment: \"{config["name"]}\"'
+	#env['HOUDINI_SPLASH_FILE'] = ''
 	houdini_path = os.path.join('/opt', 'hfs'+config['houdini_version'], 'bin')
 	product = ''
 	if config['houdini_product'] == 'Core':
