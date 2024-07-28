@@ -10,7 +10,7 @@ In Packman you can customize Houdini versions, products (FX/Core/Indie), and jso
 2. Make sure to remove them from your user folder (they will now be loaded on demand, by Packman).
 3. Add a new Packman project, choose versions and packages you wish to load.
 4. Open your Houdini from there, always.
-5. Done. Now you can quick setup project environments with just a fews clicks.
+5. Done. Now you can quickly setup per project environments with just a fews clicks.
 
 ## Screenshots:
 
