@@ -14,16 +14,19 @@ In Packman you can customize Houdini versions, products (FX/Core/Indie), and jso
 
 ## Screenshots:
 
-![Packman UI](./images/screenshot1.png)  
-*Simple/minimal UI*
+*Simple/minimal UI*  
+![Packman UI](./images/screenshot1.png)
 
+*Project configuration*  
 ![Add project](./images/screenshot2.png)
-*Project configuration*
 
+*Quick inspect configs on mouse hover*  
 ![Config preview](./images/screenshot3.png)
-*Quick inspect configs on mouse hover*
 
+*Archive old projects, keep track of the settings in case you need to re-open files.*  
 ![Archives](./images/screenshot4.png)
-*Archive old projects to clean the UI, but keep track of all settings in case you ever need to re-open project files.*
+
+
+
 
 
