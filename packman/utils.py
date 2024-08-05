@@ -228,7 +228,10 @@ def load_ui():
 
 # update status text position upon viewport resizing
 def update_status_pos():
-	dpg.set_item_pos('info_box', (dpg.get_viewport_width()-dpg.get_item_rect_size('info_box')[0]-30, dpg.get_viewport_height()-50))
+	if os.name=='nt':
+		dpg.set_item_pos('info_box', (dpg.get_viewport_width()-dpg.get_item_rect_size('info_box')[0]-30, dpg.get_viewport_height()-90))
+	else:
+		dpg.set_item_pos('info_box', (dpg.get_viewport_width()-dpg.get_item_rect_size('info_box')[0]-30, dpg.get_viewport_height()-50))
 
 # update status text and color (and reset alpha)
 def show_status(message='', color=(46, 143, 199)):
