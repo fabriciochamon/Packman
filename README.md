@@ -1,5 +1,5 @@
 # Packman
-A simple, project based, houdini loader and package manager for Linux.   
+A simple, project based, houdini loader and package manager for Linux & Windows.   
 (Download latest version from the [Releases](https://github.com/fabriciochamon/Packman/releases) page)
 
 ## How different from a regular Houdini launcher ?
