@@ -50,7 +50,7 @@ Menu **Add project**  > Fill in your project details
 
 ## Technical info:
 
-- Houdini installs are assumed to live under the default /opt folder.
+- Houdini installs are assumed to live under the default folder. ("/opt" on Linux, "C:\Program Files\Side Effects Software" on Windows)
 
 - All project configs are stored as .json files (with their corresponding folders) inside ~/.packman/configs or ~/.packman/archived. You can delete multiple configs at once by manually removing those files.
 
