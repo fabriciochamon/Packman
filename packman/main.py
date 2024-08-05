@@ -131,16 +131,31 @@ def launch_config(sender, app_data, user_data):
 	packman_home = utils.packman_home
 	subfolder = 'configs' if not config['archived'] else 'archived'
 	packages_path = os.path.join(packman_home, subfolder, config['name'].replace(' ', '_'))
+
+	# environment setup
 	env['HOUDINI_PACKAGE_DIR'] = packages_path
 	env['HOUDINI_SPLASH_MESSAGE'] = f'Packman enviroment: \"{config["name"]}\"'
 	#env['HOUDINI_SPLASH_FILE'] = ''
-	houdini_path = os.path.join('/opt', 'hfs'+config['houdini_version'], 'bin')
+
+	# windows
+	if os.name == 'nt':
+		houdini_path = os.path.join('C:/Program Files/Side Effects Software', 'Houdini '+config['houdini_version'], 'bin')
+		houdini_program = 'houdini.exe'
+	
+	# linux
+	else:
+		houdini_path = os.path.join('/opt', 'hfs'+config['houdini_version'], 'bin')
+		houdini_program = 'houdini'
+
+	# FX/Core/Indie
 	product = ''
 	if config['houdini_product'] == 'Core':
 		product='-core'
 	if config['houdini_product'] == 'Indie':
 		product='-indie'
-	cmd = f'{houdini_path}/houdini {product}'
+
+	# launch
+	cmd = f'{houdini_path}/{houdini_program} {product}'
 	utils.show_status(f'Launching \"{config["name"]}\"...', color=(64, 207, 102))
 	subprocess.Popen(cmd.split(), env=env)
 

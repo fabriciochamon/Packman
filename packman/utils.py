@@ -6,12 +6,21 @@ packman_home = os.path.expanduser('~/.packman')
 
 # get a list of houdini installs on current machine
 def get_houdini_installed_versions():
-	programs = os.listdir('/opt')
-	pattern = re.compile(r'hfs(\d{2})\.(\d)\.(\d{3})')
 	installs = []
+	
+	# windows
+	if os.name == 'nt':
+		programs = os.listdir('C:/Program Files/Side Effects Software')
+		pattern = re.compile(r'Houdini (\d{2})\.(\d)\.(\d{3})')
+	
+	# linux
+	else:
+		programs = os.listdir('/opt')
+		pattern = re.compile(r'hfs(\d{2})\.(\d)\.(\d{3})')	
+	
 	for p in programs:
 		if pattern.match(p): 
-			installs.append(p.replace('hfs', ''))
+			installs.append(p.replace('hfs', '').replace('Houdini ', ''))
 
 	return sorted(installs, reverse=True)
 
