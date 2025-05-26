@@ -1,5 +1,5 @@
 import dearpygui.dearpygui as dpg
-import utils, os, subprocess
+import utils, os, subprocess, math
 
 dpg.create_context()
 
@@ -7,6 +7,7 @@ dpg.create_context()
 utils.init_packman_user_folder()
 prefs = utils.load_prefs()
 packages_per_row = 3
+houdini_versions_per_row = 4
 glb = {}
 
 # --------- CALLBACKS --------- #
@@ -92,13 +93,19 @@ def show_project_window(sender=None, app_data=None, user_data=None, edit=False, 
 		dpg.set_value('project_name', config['name'])
 		for btn_grp in button_groups:
 			toggle_off_all_buttons(btn_grp)
-			if btn_grp!='packages':
-				buttons = dpg.get_item_children(f'grp_{btn_grp}')[1]
-			else:
-				nrows = int(len(utils.get_available_packages(prefs))/packages_per_row)
+			if btn_grp=='packages':
+				nrows = math.ceil(len(utils.get_available_packages(prefs))/packages_per_row)
 				buttons = []
-				for i in range(nrows+1):
+				for i in range(nrows):
 					buttons.extend(dpg.get_item_children(f'grp_{btn_grp}_{i}')[1])
+			elif 'houdini_version' in btn_grp:
+				nrows = math.ceil(len(utils.get_houdini_installed_versions())/houdini_versions_per_row)
+				buttons = []
+				for i in range(nrows):
+					buttons.extend(dpg.get_item_children(f'grp_{btn_grp}_{i}')[1])
+			else:
+				buttons = dpg.get_item_children(f'grp_{btn_grp}')[1]
+				
 			for btn in buttons:
 				value = dpg.get_item_user_data(btn)[1]
 				if value in glb[btn_grp]:
@@ -373,9 +380,11 @@ with dpg.window(width=600, height=600, pos=(50,50), show=False, tag='add_project
 	with dpg.collapsing_header(label='Houdini version', default_open=True):
 		houdini_installs = utils.get_houdini_installed_versions()
 		multi_selection = False
+		vers_grp_idx=0
 		for i, item in enumerate(houdini_installs):
-			if (i%4==0):
-				grp = dpg.add_group(horizontal=True, tag='grp_houdini_version')
+			if (i%houdini_versions_per_row==0):
+				grp = dpg.add_group(horizontal=True, tag=f'grp_houdini_version_{vers_grp_idx}')
+				vers_grp_idx+=1
 			btn_item = dpg.add_button(tag=f'houdini_version--{i}', label=f'{item}', user_data=['houdini_version', item, multi_selection], callback=project_set_item, parent=grp)
 			dpg.bind_item_theme(btn_item, 'toogle_OFF')
 
